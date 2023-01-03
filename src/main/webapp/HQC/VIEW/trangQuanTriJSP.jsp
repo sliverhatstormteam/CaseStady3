@@ -78,7 +78,7 @@
                     <a href="#"><span class="fa fa-user mr-3"></span> Quản lí user</a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa fa-briefcase mr-3"></span> Thống kê </a>
+                    <a href="${pageContext.request.contextPath}/crud"><span class="fa fa-briefcase mr-3"></span> Thống kê </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/bill"><span class="fa fa-briefcase mr-3"></span> Quản lí Hoá đơn</a>
@@ -87,13 +87,17 @@
             </ul>
 
             <div class="mb-5">
-                <h3 class="h6 mb-3">Lọc sản phẩm</h3>
+                <h3 class="h6 mb-3">Lọc theo tên:</h3>
                 <form action="${pageContext.request.contextPath}/crud" class="subscribe-form">
                     <div class="form-group d-flex">
                         <table>
                             <tr>
                                 <td>
                                     <input id="inputsearch" name="key" type="text" class="form-control" placeholder="Nhập vào tên" onkeypress="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p class="h6 mb-3">Lọc theo giá:</p>
                                 </td>
                             </tr>
                             <tr>

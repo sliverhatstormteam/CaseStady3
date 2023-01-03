@@ -81,10 +81,10 @@
                 <a href="#"><span class="fa fa-user mr-3"></span> Quản lí user</a>
             </li>
             <li>
-                <a href="#"><span class="fa fa-briefcase mr-3"></span> Thống kê </a>
+                <a href="${pageContext.request.contextPath}/crud"><span class="fa fa-briefcase mr-3"></span> Quản lí sản phẩm </a>
             </li>
             <li>
-                <a href="#"><span class="fa fa-briefcase mr-3"></span> Quản lí Hoá đơn</a>
+                <a href="${pageContext.request.contextPath}/bill"><span class="fa fa-briefcase mr-3"></span> Quản lí Hoá đơn</a>
             </li>
 
         </ul>
@@ -113,10 +113,10 @@
 <!-- Page Content -->
 <div id="content" class="p-4 p-md-5 pt-5">
 <h2 class="mb-4">Bảng quản lí Hoá đơn:</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et</p>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Tạo mới
-</button>
+<p>Lorem ipsum dolor sit ametta, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et</p>
+<%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">--%>
+<%--    Tạo mới--%>
+<%--</button>--%>
 <c:forEach var="bill" items="${billinfos}">
     <!-- Modal edit-->
     <div class="modal fade" id="staticBackdrop${bill.billID}" data-bs-backdrop="static"
@@ -193,8 +193,8 @@
                     Xem chi tiết
                 </button>
             </td>
-            <td><a href="${pageContext.request.contextPath}/deleteProduct?id=${bill.billID}"
-                   class="btn btn-danger">Xoá</a></td>
+<%--            <td><a href="${pageContext.request.contextPath}/deleteProduct?id=${bill.billID}"--%>
+<%--                   class="btn btn-danger">Xoá</a></td>--%>
         </tr>
     </c:forEach>
     </tbody>
