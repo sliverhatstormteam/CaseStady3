@@ -1,4 +1,4 @@
-package com.example.casestady3.model;
+package com.example.casestady3.HQC.model;
 
 public class Product {
     private int productID;
@@ -11,6 +11,14 @@ public class Product {
     private String color;
 
     public Product() {
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public int getProductID() {
@@ -69,14 +77,37 @@ public class Product {
         this.description = description;
     }
 
-    public Product(int productID, String productName, String brand, String img, double price, int kind, String description, String color) {
+    public Product(int productID, String productName, String brand, String img, double price, int kindID, String description, String color) {
         this.productID = productID;
         this.productName = productName;
         this.brand = brand;
         this.img = img;
         this.price = price;
-        this.kindID = kind;
+        this.kindID = kindID;
         this.description = description;
         this.color = color;
+    }
+    public Product( String productName, String brand, String img, double price, int kindID, String description, String color) {
+        this.productName = productName;
+        this.brand = brand;
+        this.img = img;
+        this.price = price;
+        this.kindID = kindID;
+        this.description = description;
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productID=" + productID +
+                ", productName='" + productName + '\'' +
+                ", brand='" + brand + '\'' +
+                ", img='" + img + '\'' +
+                ", price=" + price +
+                ", kindID=" + kindID +
+                ", description='" + description + '\'' +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

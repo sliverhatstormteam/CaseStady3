@@ -1,4 +1,4 @@
-package com.example.casestady3.DataBaseConnection;
+package com.example.casestady3.HQC.DataBaseConnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

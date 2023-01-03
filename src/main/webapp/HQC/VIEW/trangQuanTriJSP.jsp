@@ -24,12 +24,7 @@
     <link rel="stylesheet" href="/HQC/resource/css/style.css">
 </head>
 <body>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-</button>
-
-<!-- Modal -->
+<!-- Modal thêm -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -74,7 +69,7 @@
             </button>
         </div>
         <div class="p-4">
-            <h1><a href="index.html" class="logo">Portfolic <span>Portfolio Agency</span></a></h1>
+            <h1><a href="index.html" class="logo">Amin <span>Bảng quản lí Admin</span></a></h1>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
                     <a href="#"><span class="fa fa-home mr-3"></span> Trang chủ</a>
@@ -86,17 +81,36 @@
                     <a href="#"><span class="fa fa-briefcase mr-3"></span> Thống kê </a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa fa-briefcase mr-3"></span> Quản lí Hoá đơn</a>
+                    <a href="${pageContext.request.contextPath}/bill"><span class="fa fa-briefcase mr-3"></span> Quản lí Hoá đơn</a>
                 </li>
 
             </ul>
 
             <div class="mb-5">
-                <h3 class="h6 mb-3">Subscribe for newsletter</h3>
-                <form action="#" class="subscribe-form">
+                <h3 class="h6 mb-3">Lọc sản phẩm</h3>
+                <form action="${pageContext.request.contextPath}/crud" class="subscribe-form">
                     <div class="form-group d-flex">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input id="inputsearch" name="key" type="text" class="form-control" placeholder="Nhập vào tên" onkeypress="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input name="price1" type="text" class="form-control" placeholder="Nhập vào giá" value="0">
+                                </td>
+                                <td>
+                                    <input name="price2" type="text" class="form-control" placeholder="Nhập vào giá" value="500000000">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> <button type="submit" class="btn btn-primary">Lọc</button>
+                                </td>
+                            </tr>
+                        </table>
                         <div class="icon"><span class="icon-paper-plane"></span></div>
-                        <input type="text" class="form-control" placeholder="Enter Email Address">
+
                     </div>
                 </form>
             </div>
@@ -114,7 +128,7 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-        <h2 class="mb-4">Bảng quản lí thông tin:</h2>
+        <h2 class="mb-4">Bảng quản lí sản phẩm:</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et</p>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Tạo mới
@@ -131,44 +145,31 @@
                         </div>
                         <div class="modal-body">
                                 <%--<input name="productID" placeholder="nhập id"><br>--%>
-                            <form method="post">
-                                <label>
-                                    <input name="id" placeholder="nhập id" value="${edit.productID}" readonly>
-                                </label><br>
-                                <label>
-                                    <input name="name" placeholder="nhập tên" value="${edit.productName}">
-                                </label><br>
-                                <label>
-                                    <input name="img" placeholder="nhập ảnh" value="${edit.img}">
-                                </label><br>
-                                <label>
-                                    <input name="price" placeholder="nhập giá" value="${edit.price}">
-                                </label><br>
-                                <label>
-                                    <input name="brand" placeholder="nhập hãng" value="${edit.brand}">
-                                </label><br>
-                                <label>
-                                    <input name="img" placeholder="nhập kiểu xe" value="${edit.kindID}">
-                                </label><br>
-                                <label>
-                                    <input name="color" placeholder="nhập màu sắc" value="${edit.color}">
-                                </label><br>
-                                <label>
-                                    <input name="color" placeholder="nhập màu sắc" value="${edit.description}">
-                                </label><br>
-                                <button type="submit">Edit</button>
+                            <form method="post" action="${pageContext.request.contextPath}/editProduct">
+                                <label><input name="productID" placeholder="nhập id"   value="${edit.productID}" readonly></label><br>
+                                <label><input name="productName"      placeholder="nhập tên"  value="${edit.productName}">       </label><br>
+                                <label><input name="img"       placeholder="nhập ảnh"  value="${edit.img}">               </label><br>
+                                <label><input name="price"     placeholder="nhập giá"  value="${edit.price}">             </label><br>
+                                <label><input name="brand"     placeholder="nhập hãng" value="${edit.brand}">             </label><br>
+                                <select name="kindID" id="kindedit">
+                                    <c:forEach var="p" items="${kinds}">
+                                        <option value=${p.kindID}>${p.kindName}</option>
+                                    </c:forEach>
+                                </select><br>
+                                <label><input name="color" placeholder="nhập màu sắc" value="${edit.color}"></label><br>
+                                <label><input name="description" placeholder="nhập mô tả" value="${edit.description}"></label><br>
+                                <button type="submit" >Edit</button>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Understood</button>
                         </div>
                     </div>
                 </div>
             </div>
         </c:forEach>
 
-        <table class="table table-striped">
+        <table id="myTable" class="table table-striped">
             <thead>
             <tr>
                 <th>id Sản phẩm</th>
@@ -195,8 +196,8 @@
                     <td>${p.kindID}</td>
                     <td>${p.description}</td>
                     <td>${p.color}</td>
-                    <td><a href="${pageContext.request.contextPath}/editProduct?id=${p.productID}"
-                           class="btn btn-warning">Sửa</a></td>
+<%--                    <td><a href="${pageContext.request.contextPath}/editProduct?id=${p.productID}"--%>
+<%--                           class="btn btn-warning">Sửa</a></td>--%>
                     <td>
                         <button id="${p.productID}" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop${p.productID}">
@@ -212,6 +213,29 @@
     </div>
 
 </div>
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("inputsearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableProduct");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 <script src="<c:url value="/HQC/resource/js/jquery.min.js"/>"></script>
 <script src="${pageContext.request.contextPath}/HQC/resource/js/popper.js"></script>
 <script src="${pageContext.request.contextPath}/HQC/resource/js/bootstrap.min.js"></script>

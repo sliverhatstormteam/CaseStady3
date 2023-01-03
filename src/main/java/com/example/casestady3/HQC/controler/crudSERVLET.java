@@ -1,6 +1,7 @@
-package com.example.casestady3.HQC;
+package com.example.casestady3.HQC.controler;
 
-import com.example.casestady3.HQC.DataBaseConnection.DAO;
+import com.example.casestady3.HQC.DataBaseConnection.KindDAO;
+import com.example.casestady3.HQC.DataBaseConnection.productDAO;
 import com.example.casestady3.HQC.model.Product;
 
 import javax.servlet.*;
@@ -13,8 +14,25 @@ import java.io.IOException;
 public class crudSERVLET extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("products", DAO.getAll());
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/HQC/VIEW/crudJSP.jsp");
+        String key = req.getParameter("key");
+
+        double gia1 = 0;
+        double gia2 = 0;
+
+        try {
+            gia1=Double.parseDouble(req.getParameter("price1"));
+            gia2=Double.parseDouble(req.getParameter("price2"));
+        }
+        catch ( Exception o){
+            gia1=0;
+            gia2=500000000;
+        }
+        if (key == null) {
+            key = "";
+        }
+        req.setAttribute("kinds", KindDAO.getAll());
+        req.setAttribute("products", productDAO.find(key,gia1,gia2));
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/HQC/VIEW/trangQuanTriJSP.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -28,7 +46,7 @@ public class crudSERVLET extends HttpServlet {
         int kindID = Integer.parseInt(req.getParameter("kindID"));
         String decscription = req.getParameter("decscription");
         String color = req.getParameter("color");
-        DAO.save(new Product(brand, name, img, price,kindID,decscription,color));
+        productDAO.save(new Product(brand, name, img, price,kindID,decscription,color));
         resp.sendRedirect("/crud");
     }
 }

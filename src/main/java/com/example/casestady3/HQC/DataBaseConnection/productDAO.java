@@ -2,14 +2,11 @@ package com.example.casestady3.HQC.DataBaseConnection;
 
 import com.example.casestady3.HQC.model.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAO {
+public class productDAO {
     public static List<Product> getAll() {
         List<Product> products = new ArrayList<>();
         String sql = "Select * from product";
@@ -54,11 +51,11 @@ public class DAO {
     }
 
     public static boolean edit(Product product) {
-        String sql = "update product set brand=?, productName=?, img=?, price=?,kind=?,decscription=?,color=? where id=?";
+        String sql = "update product set brand=?, productName=?, img=?, price=?,kindID=?,decscription=?,color=? where productID=?";
         Connection connection = DataConnection.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setInt(1,product.getProductID());
+            preparedStatement.setInt(8,product.getProductID());
             preparedStatement.setString(1, product.getBrand());
             preparedStatement.setString(2, product.getProductName());
             preparedStatement.setString(3, product.getImg());
@@ -105,5 +102,33 @@ public class DAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<Product> find(String str, double gia1, double gia2) {
+        List<Product> products = new ArrayList<>();
+        String sql = "Select * from product where productName  like  concat('%',?,'%') and price BETWEEN ? and ?" ;
+        Connection connection = DataConnection.getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,str);
+            preparedStatement.setDouble(2,gia1);
+            preparedStatement.setDouble(3,gia2);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("productId");
+                String brand = resultSet.getString("brand");
+                String productName = resultSet.getString("productName");
+                String img = resultSet.getString("img");
+                double price = resultSet.getDouble("price");
+                int kindID = resultSet.getInt("kindID");
+                String decscription = resultSet.getString("decscription");
+                String color = resultSet.getString("color");
+                products.add(new Product(productId, brand, productName, img, price,kindID, decscription,color));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return products;
     }
 }
